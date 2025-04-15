@@ -190,7 +190,7 @@ class TLSRequirerCharm(CharmBase):
         self, mode: Mode, certificate_request: CertificateRequestAttributes
     ) -> None:
         """Store the assigned certificate in a Juju secret."""
-        assigned_certificate, _ = self.certificates.get_assigned_certificate(
+        assigned_certificate, pkey = self.certificates.get_assigned_certificate(
             certificate_request=certificate_request
         )
         if not assigned_certificate:
@@ -200,6 +200,7 @@ class TLSRequirerCharm(CharmBase):
             "certificate": str(assigned_certificate.certificate),
             "ca-certificate": str(assigned_certificate.ca),
             "csr": str(assigned_certificate.certificate_signing_request),
+            "private-key": str(pkey),
         }
         try:
             certificate_secret = self.model.get_secret(
@@ -372,6 +373,7 @@ class TLSRequirerCharm(CharmBase):
                         "certificate": content["certificate"],
                         "ca-certificate": content["ca-certificate"],
                         "csr": content["csr"],
+                        "private-key": content["private-key"],
                     }
                 )
             else:

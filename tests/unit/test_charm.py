@@ -316,6 +316,7 @@ class TestCharmUnitMode:
             "certificate": CERTIFICATE,
             "ca-certificate": CA,
             "csr": self.csr,
+            "private-key": str(private_key),
         }
 
     def test_given_certificate_already_stored_when_new_matching_certificate_available_then_certificate_is_overwritten(  # noqa: E501
@@ -388,6 +389,7 @@ class TestCharmUnitMode:
             "certificate": new_certificate,
             "ca-certificate": CA,
             "csr": self.csr,
+            "private-key": str(private_key),
         }
 
     def test_given_certificate_is_not_stored_when_on_get_certificate_action_then_event_fails(self):
@@ -407,7 +409,12 @@ class TestCharmUnitMode:
     ):
         model_name = "abc"
         certificate_secret = scenario.Secret(
-            {"certificate": CERTIFICATE, "ca-certificate": CA, "csr": self.csr},
+            {
+                "certificate": CERTIFICATE,
+                "ca-certificate": CA,
+                "csr": self.csr,
+                "private-key": self.private_key,
+            },
             owner="unit",
             label=f"cert-0.unit-0.tls-certificates-requirer.{model_name}",
         )
@@ -450,6 +457,7 @@ class TestCharmUnitMode:
                         "certificate": CERTIFICATE,
                         "ca-certificate": CA,
                         "csr": self.csr,
+                        "private-key": self.private_key,
                     }
                 ]
             )
@@ -776,6 +784,7 @@ class TestCharmAppMode:
             "certificate": CERTIFICATE,
             "ca-certificate": CA,
             "csr": self.csr,
+            "private-key": str(private_key),
         }
 
     def test_given_certificate_already_stored_when_new_matching_certificate_available_then_certificate_is_overwritten(  # noqa: E501
@@ -846,6 +855,7 @@ class TestCharmAppMode:
             "certificate": new_certificate,
             "ca-certificate": CA,
             "csr": self.csr,
+            "private-key": str(private_key),
         }
 
     def test_given_certificate_is_not_stored_when_on_get_certificate_action_then_event_fails(self):
@@ -865,7 +875,12 @@ class TestCharmAppMode:
     ):
         model_name = "abc"
         certificate_secret = scenario.Secret(
-            {"certificate": CERTIFICATE, "ca-certificate": CA, "csr": self.csr},
+            {
+                "certificate": CERTIFICATE,
+                "ca-certificate": CA,
+                "csr": self.csr,
+                "private-key": self.private_key,
+            },
             owner="app",
             label=f"cert-0.tls-certificates-requirer.{model_name}",
         )
@@ -909,6 +924,7 @@ class TestCharmAppMode:
                         "certificate": CERTIFICATE,
                         "ca-certificate": CA,
                         "csr": self.csr,
+                        "private-key": self.private_key,
                     }
                 ]
             )
